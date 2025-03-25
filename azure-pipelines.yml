@@ -11,5 +11,5 @@ extends:
     dockerRegistryServiceConnection: '39944cd6-c323-4292-bec9-8da37c4f467d'
     imageName: 'bucky0838/node_project'
     dockerfilePath: 'Dockerfile'
-    vmImage: 'ubuntu-latest'
+    vmImage: 'Default'
 
