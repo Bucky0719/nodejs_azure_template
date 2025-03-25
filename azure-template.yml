@@ -22,7 +22,7 @@ stages:
   - job: BuildJob
     displayName: "Install Node.js Dependencies"
     pool:
-      vmImage: ${{ parameters.agentPool }}
+      vmImage: ${{ parameters.vmImage }}
     steps:
     - task: NodeTool@0
       inputs:
@@ -42,7 +42,7 @@ stages:
   - job: DockerJob
     displayName: "Build and Push Docker Image"
     pool:
-      vmImage: ${{ parameters.agentPool }}
+      vmImage: ${{ parameters.vmImage }}
     steps:
     - task: Docker@2
       inputs:
@@ -60,7 +60,7 @@ stages:
   - job: DeployJob
     displayName: "Deploy Container"
     pool:
-      vmImage: ${{ parameters.agentPool }}
+      vmImage: ${{ parameters.vmImage }}
     steps:
     - script: echo "Deploying the container..."
     - script: |
