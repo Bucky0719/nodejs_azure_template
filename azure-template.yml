@@ -70,5 +70,5 @@ stages:
     steps:
     - script: echo "Deploying the container..."
     - script: |
-        docker run -d -p 8080:8080 --name node_app ${{ parameters.imageName }}:latest
+        docker run -d -p 8081:8081 --name node_app ${{ parameters.imageName }}:latest
       displayName: "Run Docker Container"
