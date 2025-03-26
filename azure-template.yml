@@ -70,5 +70,9 @@ stages:
     steps:
     - script: echo "Deploying the container..."
     - script: |
+        docker pull $(imageName):latest
+        docker stop node_app || true
+        docker rm node_app || true
         docker run -d -p 8081:8081 --name node_app ${{ parameters.imageName }}:latest
       displayName: "Run Docker Container"
+      
