@@ -13,7 +13,7 @@ parameters:
   
   - name: vmImage
     type: string
-    default: 'ubuntu-latest'
+    default: 'agent2'  # Explicitly assign to agent2
 
 stages:
 - stage: Build
@@ -22,7 +22,9 @@ stages:
   - job: BuildJob
     displayName: "Install Node.js Dependencies"
     pool:
-      vmImage: ${{ parameters.vmImage }}
+      name: "Default"  # Ensure this matches your Azure DevOps agent pool
+      demands:
+        - Agent.Name -equals agent2  # Runs only on agent2
     steps:
     - task: NodeTool@0
       inputs:
@@ -42,7 +44,9 @@ stages:
   - job: DockerJob
     displayName: "Build and Push Docker Image"
     pool:
-      vmImage: ${{ parameters.vmImage }}
+      name: "Default"
+      demands:
+        - Agent.Name -equals agent2
     steps:
     - task: Docker@2
       inputs:
@@ -60,10 +64,11 @@ stages:
   - job: DeployJob
     displayName: "Deploy Container"
     pool:
-      vmImage: ${{ parameters.vmImage }}
+      name: "Default"
+      demands:
+        - Agent.Name -equals agent2
     steps:
     - script: echo "Deploying the container..."
     - script: |
         docker run -d -p 8080:8080 --name node_app ${{ parameters.imageName }}:latest
       displayName: "Run Docker Container"
-
