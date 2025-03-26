@@ -75,4 +75,29 @@ stages:
         docker rm node_app || true
         docker run -d -p 8081:8081 --name node_app ${{ parameters.imageName }}:latest
       displayName: "Run Docker Container"
+
+- stage: FailureNotification
+  displayName: "Notify on Failure"
+  dependsOn: [Build, DockerBuild, Deploy]
+  condition: failed()  # Runs only if any of the previous stages fail
+  jobs:
+  - job: NotifyJob
+    displayName: "Send Failure Notification"
+    pool:
+      name: "Default"  # Change to your self-hosted agent pool
+    steps:
+    - script: echo "Pipeline failed! Notify the team."
+
+- stage: SuccessNotification
+  displayName: "Notify on Success"
+  dependsOn: [Build, DockerBuild, Deploy]
+  condition: succeeded()  # Runs only if all previous stages succeed
+  jobs:
+  - job: NotifySuccessJob
+    displayName: "Send Success Notification"
+    pool:
+      name: "Default"  # Change to your self-hosted agent pool
+    steps:
+    - script: echo "Pipeline completed successfully! Notify the team."
+
       
