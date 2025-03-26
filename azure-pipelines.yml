@@ -9,6 +9,6 @@ extends:
   template: azure-template.yml
   parameters:
     dockerRegistryServiceConnection: '39944cd6-c323-4292-bec9-8da37c4f467d'
-    imageName: 'bucky0838/node_project'
+    imageName: 'bucky0838/node_project_2.0'
     dockerfilePath: 'Dockerfile'
     vmImage: 'agent2'
